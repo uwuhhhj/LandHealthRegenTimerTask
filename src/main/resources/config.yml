@@ -1,0 +1,8 @@
+regen-task:
+  enabled: true
+  # Initial delay before first run (in ticks). 20 ticks = 1 second.
+  initial-delay-ticks: 200
+  # Period between runs (in ticks).
+  period-ticks: 200
+  # Keep player saturation at 1.0 to prevent hunger drain during regen.
+  prevent-saturation-loss: true

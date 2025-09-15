@@ -1,0 +1,8 @@
+name: LandHealthRegenTimerTask
+version: '1.0.0'
+main: io.github.loliiiico.landHealthRegenTimerTask.LandHealthRegenTimerTask
+api-version: '1.21'
+authors: [ Loliiiico ]
+description: Players can restore health and saturation regularly in the land
+softdepend: [Lands]
+load: STARTUP

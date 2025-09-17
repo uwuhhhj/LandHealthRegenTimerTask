@@ -8,21 +8,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
-
+import java.util.UUID;
 
 // Lands API imports aligned with 7.15.x
 import me.angeschossen.lands.api.LandsIntegration;
 import me.angeschossen.lands.api.flags.enums.FlagTarget;
 import me.angeschossen.lands.api.flags.enums.RoleFlagCategory;
 import me.angeschossen.lands.api.flags.type.RoleFlag;
+import me.angeschossen.lands.api.land.Area;
 import me.angeschossen.lands.api.land.LandWorld;
 import me.angeschossen.lands.api.player.LandPlayer;
+import static me.angeschossen.lands.api.flags.type.Flags.*;
 
 public class LandsHook {
     private final LandHealthRegenTimerTask plugin;
 
     private RoleFlag regenRoleFlag;
-    private RoleFlag attackPlayerFlag;
     private LandsIntegration landsApi;
 
     public LandsHook(LandHealthRegenTimerTask plugin) {
@@ -63,27 +64,27 @@ public class LandsHook {
         Location loc = player.getLocation();
         try {
             LandWorld lWord = landsApi.getWorld(player.getWorld());
+            //plugin.getLogger().info("恢复是否启用？"+player.getName()+lWord.hasRoleFlag(player.getUniqueId(),loc,regenRoleFlag));
             return lWord.hasRoleFlag(player.getUniqueId(),loc,regenRoleFlag);
         } catch (Throwable t) {
             return true;
         }
     }
-/* 
+
     public boolean isPvPEnabledAt(Player player) {
-        if (landsApi == null || attackPlayerFlag == null) {
-            plugin.getLogger().info("attackPlayerFlag 空");
+        if (landsApi == null) {
             return false;
         }
         Location loc = player.getLocation();
+        LandWorld lWord = landsApi.getWorld(player.getWorld());
         try {
-            LandWorld lWord = landsApi.getWorld(player.getWorld());
             if (lWord == null) return false; // World not managed by Lands -> treat as PvP disabled
-            plugin.getLogger().info("玩家"+player.getName()+"PVP权限"+lWord.hasRoleFlag(player.getUniqueId(),loc,attackPlayerFlag));
-            return lWord.hasRoleFlag(player.getUniqueId(), loc, attackPlayerFlag);
+            //plugin.getLogger().info("pvp是否开启？"+player.getName()+lWord.hasRoleFlag(player.getUniqueId(),loc,ATTACK_PLAYER));
+            return lWord.hasRoleFlag(player.getUniqueId(),loc,ATTACK_PLAYER);
         } catch (Throwable t) {
             plugin.getLogger().warning("Lands role flag check failed: " + t.getMessage());
             return false; // On error, don't block regen
         }
     }
-*/
+
 }

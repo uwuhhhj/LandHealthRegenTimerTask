@@ -56,8 +56,9 @@ public class AsyncHealthRegenTask implements Runnable {
             // Lands checks: custom regen flag must allow; PvP flag blocks regen
             if (landsHook != null) {
                 if (!landsHook.canPlayerRegen(player)) return;
-            //  if (landsHook.isPvPEnabledAt(player)) return;
+                if (landsHook.isPvPEnabledAt(player)) return;
             }
+
             // Switch to main thread to fire event and apply
             Bukkit.getScheduler().runTask(plugin, () -> applyRegainSync(player, preventSaturationLoss, currentHP, maxHP, gained));
         } catch (Throwable ignored) {
